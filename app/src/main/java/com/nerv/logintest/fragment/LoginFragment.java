@@ -1,6 +1,7 @@
 package com.nerv.logintest.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.nerv.logintest.R;
+import com.nerv.logintest.activity.WelcomeActicity;
 import com.nerv.logintest.entity.ResponseLogin;
 import com.nerv.logintest.mvp.presenter.LoginPresnter;
 import com.nerv.logintest.mvp.presenter.impl.LoginPresnterImpl;
@@ -74,6 +76,7 @@ public class LoginFragment extends BaseFragment implements LoginView,TextWatcher
 
     @Override
     public void showSuccess() {
+        startActivity(new Intent(getActivity(), WelcomeActicity.class));
         Toast.makeText(getActivity(), "登录成功", Toast.LENGTH_SHORT).show();
     }
 

@@ -1,7 +1,5 @@
 package com.nerv.logintest.mvp.modle.impl;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.nerv.logintest.entity.ResponseCheckNum;
 import com.nerv.logintest.mvp.modle.CheckModle;
@@ -22,15 +20,13 @@ public class CheckModleImpl implements CheckModle {
     @Override
     public void doCheck(final String numberAndCheckNum, final ChekCallBack chekCallBack) {
         String[] str=numberAndCheckNum.split("_");
-        for (String s:str) {
-            Log.d("CheckModleImpl", s);
-        }
+        if (str.length<2)return;
         HashMap<String,String> map=new HashMap<>();
-        map.put("type","verify");
+        map.put("type","signup");
         map.put("mobile",str[0]);
         map.put("verify_code",str[1]);
         Body body=new FormBody.Builder()
-                .add("type","verify")
+                .add("type","signup")
                 .add("mobile",str[0])
                 .add("verify_code",str[1])
                 .build();
@@ -41,14 +37,12 @@ public class CheckModleImpl implements CheckModle {
         HttpUtils.getInstance().execute(builder.build(), new HttpUtils.CallBack() {
             @Override
             public void onResponse(String response) {
-                Log.d("CheckModleImpl", response);
                 ResponseCheckNum responseCheckNum= JSON.parseObject(response,ResponseCheckNum.class);
                 if (responseCheckNum.isCorrect()){
                     chekCallBack.right(numberAndCheckNum);
                 }else{
                     chekCallBack.erorr(responseCheckNum);
                 }
-                Log.d("CheckModleImpl", "i'v changed");
             }
             @Override
             public void onError() {

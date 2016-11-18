@@ -20,6 +20,7 @@ public class LoginMoldeImpl implements LoginModle {
     @Override
     public void loadDatas(String nameAndPwd, final LoginCallBack loginCallBack) {
         String[] str=nameAndPwd.split("_");
+        if (str.length<2)return;
         HashMap<String,String>map=new HashMap<>();
         map.put("username",str[0]);
         map.put("password",str[1]);

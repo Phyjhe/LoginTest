@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,9 +28,9 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher,View.O
     private String checkNum;
     private SetPwdPresenter pwdPresenter;
     @BindView(R.id.main_regist_number)
-    EditText mainRegistNumber;
+    EditText pwd1;
     @BindView(R.id.main_regist_check)
-    EditText mainRegistCheck;
+    EditText pwd2;
     @BindView(R.id.main_get)
     Button mainGet;
     @BindView(R.id.activity_main)
@@ -47,14 +48,17 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher,View.O
 
     @Override
     protected void initViews() {
-
+        ButterKnife.bind(this);
+        mainGet.setOnClickListener(this);
+        pwd1.addTextChangedListener(this);
+        pwd2.addTextChangedListener(this);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
+
         checkNum=getIntent().getStringExtra("checkNum")+"_";
     }
 
@@ -65,7 +69,8 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher,View.O
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (!TextUtils.isEmpty(mainRegistCheck.getText().toString())&&!TextUtils.isEmpty(mainRegistNumber.getText().toString())){
+        if ((getCount(pwd1)==getCount(pwd2))&&getCount(pwd1)>5){
+//        if (!isEditEmpty(pwd1)&&!isEditEmpty(pwd2)&&count>5){
             mainGet.setBackgroundResource(R.color.all);
             mainGet.setEnabled(true);
         }else {
@@ -73,7 +78,15 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher,View.O
             mainGet.setEnabled(false);
         }
     }
-
+    private int getCount(EditText editText){
+        return editText.getText().toString().length();
+    }
+    private boolean isEditEmpty(EditText editText){
+        if (TextUtils.isEmpty(editText.getText().toString())){
+            return true;
+        }
+        return false;
+    }
     @Override
     public void afterTextChanged(Editable s) {
 
@@ -81,8 +94,10 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher,View.O
 
     @Override
     public void onClick(View v) {
-        if (mainRegistCheck.getText().toString().equals(mainRegistNumber.getText().toString())){
-            pwdPresenter.setPwd(checkNum+mainRegistCheck.getText().toString());
+        String s=checkNum+pwd1.getText().toString();
+        Log.d("ResetPwdActivity", s);
+        if (pwd1.getText().toString().equals(pwd2.getText().toString())){
+            pwdPresenter.setPwd(checkNum+pwd1.getText().toString());
         }else {
             Toast.makeText(this, "两次密码不符", Toast.LENGTH_SHORT).show();
         }

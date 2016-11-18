@@ -21,14 +21,15 @@ public class SetPwdImpl implements SetPwdModle {
     @Override
     public void setPwd(String numbers, final SetCallBack setCallBack) {
         String[] str=numbers.split("_");
+        if (str.length<3)return;
         HashMap<String,String> map=new HashMap<>();
         map.put("mobile",str[0]);
         map.put("password",str[2]);
-        map.put("verify",str[1]);
+        map.put("verify_code",str[1]);
         Body body=new FormBody.Builder()
                 .add("mobile",str[0])
                 .add("password",str[2])
-                .add("verify",str[1])
+                .add("verify_code",str[1])
                 .build();
         Request.Builder builder=new Request.Builder()
                 .addHeader("X-PASSPORT-APITOKEN", APIUtils.getXPassportApitoken(map))
@@ -37,7 +38,7 @@ public class SetPwdImpl implements SetPwdModle {
         HttpUtils.getInstance().execute(builder.build(), new HttpUtils.CallBack() {
             @Override
             public void onResponse(String response) {
-                Log.d("set", "hahaha"+response);
+                Log.d("sethahaha", "hahaha"+response);
                 ResponseCheckNum responseCheckNum= JSON.parseObject(response,ResponseCheckNum.class);
                 if (responseCheckNum.getStatus()==0){
                     setCallBack.setSuccess();

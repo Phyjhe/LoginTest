@@ -48,8 +48,8 @@ public class CheckModleImpl implements CheckModle {
                 }else{
                     chekCallBack.erorr(responseCheckNum);
                 }
+                Log.d("CheckModleImpl", "i'v changed");
             }
-
             @Override
             public void onError() {
 

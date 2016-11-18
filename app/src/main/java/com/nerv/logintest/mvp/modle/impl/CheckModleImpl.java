@@ -42,6 +42,7 @@ public class CheckModleImpl implements CheckModle {
             @Override
             public void onResponse(String response) {
                 Log.d("CheckModleImpl", response);
+                Log.d("CheckModleImpl", "666:" + 666);
                 ResponseCheckNum responseCheckNum= JSON.parseObject(response,ResponseCheckNum.class);
                 if (responseCheckNum.isCorrect()){
                     chekCallBack.right(numberAndCheckNum);

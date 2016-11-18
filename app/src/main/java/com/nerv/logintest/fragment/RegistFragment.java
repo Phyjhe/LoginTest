@@ -86,7 +86,7 @@ public class RegistFragment extends BaseFragment implements TextWatcher,View.OnC
             fangmentCheck.setBackgroundResource(R.color.all);
             fangmentCheck.setEnabled(true);
         }
-        if (!TextUtils.isEmpty(mainRegistPwd.getText().toString())&&!TextUtils.isEmpty(mainRegistNumber.getText().toString())){
+        if (!TextUtils.isEmpty(mainRegistPwd.getText().toString())&&mainRegistPwd.getText().toString().length()>=4&&!TextUtils.isEmpty(mainRegistNumber.getText().toString())){
             fragmentNext.setBackgroundResource(R.color.all);
             fragmentNext.setEnabled(true);
         }else {

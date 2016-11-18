@@ -83,7 +83,7 @@ public class ResetPwdActivity extends BaseActivity implements TextWatcher,View.O
     }
     private boolean isEditEmpty(EditText editText){
         if (TextUtils.isEmpty(editText.getText().toString())){
-            Log.d("ResetPwdActivity", "test");
+            Log.d("ResetPwdActivity", "冲突解决");
             return true;
         }
         return false;
